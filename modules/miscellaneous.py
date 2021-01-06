@@ -24,8 +24,8 @@ class miscellaneous(commands.Cog):
 
     @commands.command(name='giveaway', aliases=['g'], help='Begins a giveaway')
     async def giveaway(self, context, hours=None, *, prize=None):
-        if hours and prize is None:
-            await context.send(f'{context.author.mention} Command syntax: ``p?giveaway <time in hours> <prize>')
+        if hours and prize is None or hours or prize is None:
+            await context.send(f'{context.author.mention} Command syntax: ``p?giveaway <time in hours> <prize>``')
             return
         channel = self.client.get_channel(722141971736559695)  # change
         message = await channel.send(f"{context.author.mention} is giving away {prize}! Giveaway will end in {hours}"
