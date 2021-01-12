@@ -1,4 +1,6 @@
 from discord.ext import commands
+import discord
+import asyncio
 
 
 class fun(commands.Cog):
@@ -22,6 +24,15 @@ class fun(commands.Cog):
             await context.send('nice try nerd')
             return
         await context.send('https://tenor.com/view/lizard-snowing-mage-staff-gif-10597733')
+
+    @commands.command(name='banana', hidden=True)
+    async def banana(self, context):
+        banana_embed = discord.Embed(title='Banana', color=0xFFFF00)
+        channel = context.channel
+        message = await channel.send(embed=banana_embed)
+        boom_embed = discord.Embed(title='BOOM', color=0xFF0000)
+        await asyncio.sleep(3)
+        await message.edit(embed=boom_embed)
 
 
 def setup(client):
