@@ -1,5 +1,6 @@
 from discord.ext import commands
 import asyncio
+import sys
 import random
 
 
@@ -22,7 +23,7 @@ class miscellaneous(commands.Cog):
         await message.delete()
         await context.send(content)
 
-    @commands.command(name='giveaway', aliases=['g'], help='Begins a giveaway')
+    @commands.command(name='giveaway', aliases=['g'], help='Begins a giveaway', hidden=True)
     async def giveaway(self, context, hours=None, *, prize=None):
         if hours and prize is None or hours or prize is None:
             await context.send(f'{context.author.mention} Command syntax: ``p?giveaway <time in hours> <prize>``')
@@ -39,6 +40,12 @@ class miscellaneous(commands.Cog):
         while winner.id == 717445341217030238:
             winner = random.choice(user)
         await channel.send(f'{winner.mention} has won the giveaway! DM {context.author.mention} to claim.')
+
+    @commands.command(name='shutdown', aliases=['sd'], hidden=True)
+    @commands.is_owner()
+    async def shutdown(self, context):
+        await context.send('Shutting down...')
+        sys.exit()
 
 
 def setup(client):
