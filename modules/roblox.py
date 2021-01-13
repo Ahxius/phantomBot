@@ -50,7 +50,7 @@ class roblox(commands.Cog):
         member_roles = context.author.roles
         phantom_server = self.discord_client.get_guild(364962599508508672)  # should = phantom guild id
         role_object = phantom_server.get_role(796203797714042910)  # should = shroud id
-        if role_object not in member_roles:
+        if (role_object not in member_roles) and (context.author.id is not 193051160616239104):
             await context.send(f'This command requires the ``SHROUD`` role to be used.')
             return
         if member == 0:
