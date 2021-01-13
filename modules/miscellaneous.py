@@ -61,7 +61,7 @@ class miscellaneous(commands.Cog):
             copy_exit = os.system('cd ~/phantomBot-temp && cp ~/phantomBot-temp/*.py ~/phantomBot && cp '
                                   '~/phantomBot-temp/modules/*.py ~/phantomBot/modules')
             if copy_exit == 0:
-                await context.send('Clone successful, reloading extensions.')
+                await context.send('Copy successful, reloading extensions.')
                 os.system('sudo rm ~/phantomBot-temp -r')
                 for cog in os.listdir('modules'):
                     if not cog.endswith('.py'):
