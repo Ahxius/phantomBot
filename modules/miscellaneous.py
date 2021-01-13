@@ -76,7 +76,7 @@ class miscellaneous(commands.Cog):
     @commands.command(name='todo', aliases=['to-do', 'td'], hidden=True)
     @commands.is_owner()
     async def todo(self, context, *, content: str = None):
-        f = open('todo.txt', 'w+')
+        f = open('~/phantomBot/todo.txt', 'w+')
         if content is None:
             await context.send(f.read())
             return
