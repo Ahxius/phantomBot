@@ -77,8 +77,9 @@ class miscellaneous(commands.Cog):
     @commands.is_owner()
     async def todo(self, context, *, content: str = None):
         f = open('~/phantomBot/todo.txt', 'w+')
+        file_content = f.read()
         if content is None:
-            await context.send(f.read())
+            await context.send(file_content)
             return
         f.write(content + '\n')
 
