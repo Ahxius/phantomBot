@@ -73,6 +73,15 @@ class miscellaneous(commands.Cog):
                         await context.send(e)
                 await context.send('Bot successfully updated from GitHub')
 
+    @commands.command(name='todo', aliases=['to-do', 'td'], hidden=True)
+    @commands.is_owner()
+    async def todo(self, context, *, content: str = None):
+        f = open('todo.txt', 'w+')
+        if content is None:
+            await context.send(f.read())
+            return
+        f.write(content + '\n')
+
 
 def setup(client):
     client.add_cog(miscellaneous(client))
