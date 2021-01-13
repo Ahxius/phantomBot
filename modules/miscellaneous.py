@@ -17,7 +17,7 @@ class miscellaneous(commands.Cog):
     async def send(self, context, *, content: str = 0):
         member_roles = context.author.roles
         phantom_server = self.client.get_guild(364962599508508672)  # should = phantom guild id
-        role_object = phantom_server.get_role(796203797714042910)
+        role_object = phantom_server.get_role(761957228151832587)
         if context.author.id != 193051160616239104 and role_object not in member_roles:
             await context.send(f"This command requires the ``SHROUD`` role for it to be used.")
             return
