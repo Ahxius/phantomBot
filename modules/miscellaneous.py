@@ -57,8 +57,10 @@ class miscellaneous(commands.Cog):
     async def update(self, context):
         clone_exit = os.system(f'git clone https://Ahxius:{git_pass}@github.com/Ahxius/phantomBot.git ~/phantomBot-temp')
         if clone_exit == 0:
+            await context.send('Clone successful, copying files into main directory.')
             copy_exit = os.system('cd ~/phantomBot-temp && cp ~/phantomBot-temp/*.py ~/phantomBot')
             if copy_exit == 0:
+                await context.send('Clone successful, reloading extensions.')
                 os.system('sudo rm ~/phantomBot-temp -r')
                 for cog in os.listdir('modules'):
                     if not cog.endswith('.py'):
@@ -66,10 +68,8 @@ class miscellaneous(commands.Cog):
                     try:
                         self.client.unload_extension(f'modules.{cog[:-3]}')
                         self.client.load_extension(f'modules.{cog[:-3]}')
-                    except SyntaxError as es:
-                        print(f'Failed to load module {cog} due to a syntax error.')
-                    except ImportError as ei:
-                        print(f'Failed to load module {cog} due to an import error.')
+                    except Exception as e:
+                        await context.send(e)
                 await context.send('Bot successfully updated from GitHub')
 
     @commands.command(name='test')
