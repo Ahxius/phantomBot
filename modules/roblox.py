@@ -58,9 +58,11 @@ class roblox(commands.Cog):
             return
         phantom_group = await roblox_client.get_group(3248486)
         requests = await phantom_group.get_join_requests()
+        roblox_user = await roblox_client.get_user(member)
         for request in requests:
             if request.user.name == member:
                 await request.accept()
+                await phantom_group.promote(roblox_user.id)
                 await context.send(f'{member} has been accepted into the PHANTOM group.')
                 return
         await context.send(f"{member} couldn't be found in the join requests.")
