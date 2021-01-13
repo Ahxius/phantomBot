@@ -79,7 +79,7 @@ class miscellaneous(commands.Cog):
         f = open('~/phantomBot/todo.txt', 'w+')
         file_content = f.read()
         if content is None:
-            await context.send(file_content)
+            await context.send(f'To-Do List:\n{file_content}')
             return
         f.write(content + '\n')
 
