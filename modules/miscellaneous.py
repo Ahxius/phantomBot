@@ -73,10 +73,6 @@ class miscellaneous(commands.Cog):
                         await context.send(e)
                 await context.send('Bot successfully updated from GitHub')
 
-    @commands.command(name='test')
-    async def test(self, context):
-        await context.send('hi there!')
-
 
 def setup(client):
     client.add_cog(miscellaneous(client))
