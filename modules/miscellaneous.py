@@ -55,7 +55,7 @@ class miscellaneous(commands.Cog):
     @commands.command(name='update', hidden=True)
     @commands.is_owner()
     async def update(self, context):
-        clone_exit = os.system(f'git clone https://Ahxius:{git_pass}/github.com/Ahxius/phantomBot.git ~/phantomBot-temp')
+        clone_exit = os.system(f'git clone https://Ahxius:{git_pass}@github.com/Ahxius/phantomBot.git ~/phantomBot-temp')
         if clone_exit == 0:
             copy_exit = os.system('cd ~/phantomBot-temp && cp ~/phantomBot-temp/*.py ~/phantomBot')
             if copy_exit == 0:
@@ -71,6 +71,10 @@ class miscellaneous(commands.Cog):
                     except ImportError as ei:
                         print(f'Failed to load module {cog} due to an import error.')
                 await context.send('Bot successfully updated from GitHub')
+
+    @commands.command(name='test')
+    async def test(self, context):
+        await context.send('hi there!')
 
 
 def setup(client):
