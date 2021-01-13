@@ -54,7 +54,7 @@ class roblox(commands.Cog):
             await context.send(f'This command requires the ``SHROUD`` role to be used.')
             return
         if member == 0:
-            await context.send(f'{context.author.mention} Command syntax: `p?approve <member>')
+            await context.send(f'{context.author.mention} Command syntax: ``p?approve <member>``')
             return
         phantom_group = await roblox_client.get_group(3248486)
         requests = await phantom_group.get_join_requests()
