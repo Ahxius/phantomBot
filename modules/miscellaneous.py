@@ -3,6 +3,10 @@ import asyncio
 import sys
 import random
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
+git_pass = os.getenv('GITHUB_PASSWORD')
 
 
 class miscellaneous(commands.Cog):
@@ -51,7 +55,7 @@ class miscellaneous(commands.Cog):
     @commands.command(name='update', hidden=True)
     @commands.is_owner()
     async def update(self, context):
-        clone_exit = os.system('git clone https://github.com/Ahxius/phantomBot.git ~/phantomBot-temp')
+        clone_exit = os.system(f'git clone https://Ahxius:{git_pass}/github.com/Ahxius/phantomBot.git ~/phantomBot-temp')
         if clone_exit == 0:
             copy_exit = os.system('cd ~/phantomBot-temp && cp ~/phantomBot-temp/*.py ~/phantomBot')
             if copy_exit == 0:
