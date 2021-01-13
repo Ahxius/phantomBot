@@ -2,6 +2,7 @@ from discord.ext import commands
 import asyncio
 import sys
 import random
+import os
 
 
 class miscellaneous(commands.Cog):
@@ -46,6 +47,26 @@ class miscellaneous(commands.Cog):
     async def shutdown(self, context):
         await context.send('Shutting down...')
         sys.exit()
+
+    @commands.command(name='update', hidden=True)
+    @commands.is_owner()
+    async def update(self, context):
+        clone_exit = os.system('git clone https://github.com/Ahxius/phantomBot.git ~/phantomBot-temp')
+        if clone_exit == 0:
+            copy_exit = os.system('cd ~/phantomBot-temp && cp ~/phantomBot-temp/*.py ~/phantomBot')
+            if copy_exit == 0:
+                os.system('sudo rm ~/phantomBot-temp -r')
+                for cog in os.listdir('modules'):
+                    if not cog.endswith('.py'):
+                        continue
+                    try:
+                        self.client.unload_extension(f'modules.{cog[:-3]}')
+                        self.client.load_extension(f'modules.{cog[:-3]}')
+                    except SyntaxError as es:
+                        print(f'Failed to load module {cog} due to a syntax error.')
+                    except ImportError as ei:
+                        print(f'Failed to load module {cog} due to an import error.')
+                await context.send('Bot successfully updated from GitHub')
 
 
 def setup(client):
