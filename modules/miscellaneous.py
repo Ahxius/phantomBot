@@ -58,7 +58,8 @@ class miscellaneous(commands.Cog):
         clone_exit = os.system(f'git clone https://Ahxius:{git_pass}@github.com/Ahxius/phantomBot.git ~/phantomBot-temp')
         if clone_exit == 0:
             await context.send('Clone successful, copying files into main directory.')
-            copy_exit = os.system('cd ~/phantomBot-temp && cp ~/phantomBot-temp/*.py ~/phantomBot')
+            copy_exit = os.system('cd ~/phantomBot-temp && cp ~/phantomBot-temp/*.py ~/phantomBot && cp '
+                                  '~/phantomBot-temp/modules/*.py ~/phantomBot/modules')
             if copy_exit == 0:
                 await context.send('Clone successful, reloading extensions.')
                 os.system('sudo rm ~/phantomBot-temp -r')
