@@ -69,10 +69,10 @@ class roblox(commands.Cog):
         member_link = f'https://www.roblox.com/users/{member_id}/profile'
         log_channel = self.discord_client.get_channel(676604257905934399)
         for request in requests:
-            if request.user.name == member:
+            if request.user.name == member_object.name:
                 await request.accept()
-                await phantom_group.promote(member_id)
                 await context.send(f'{member} has been accepted into the PHANTOM group.')
+                await phantom_group.promote(member_id)
                 embed = discord.Embed(title=f'User accepted by {context.author.nick}')
                 embed.add_field(name='Roblox Name', value=f"[{member_object.name}]({member_link})")
                 await log_channel.send(embed=embed)
