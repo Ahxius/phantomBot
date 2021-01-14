@@ -1,4 +1,5 @@
 from discord.ext import commands
+import discord
 import robloxapi
 from robloxapi.utils import errors
 import os
@@ -31,13 +32,18 @@ class roblox(commands.Cog):
         if member == 0:
             await context.send(f'{context.author.mention} Command syntax: `p?exile <member>`')
             return
-        user_object = await roblox_client.get_user_by_username(member)
+        member_object = await roblox_client.get_user_by_username(member)
         phantom_group = await roblox_client.get_group(3248486)
-        user_id = user_object.id
+        member_id = member_object.id
+        member_link = f'https://www.roblox.com/users/{member_id}/profile'
+        log_channel = self.discord_client.get_channel(676604257905934399)
         while True:
             try:
-                await phantom_group.exile(user_id)
+                await phantom_group.exile(member_id)
                 await context.send(f'{member} has been exiled by {context.author.mention}.')
+                embed = discord.Embed(title=f'User exiled by {context.author.nick}')
+                embed.add_field(name='Roblox Name', value=f"[{member_object.name}]({member_link})")
+                await log_channel.send(embed=embed)
                 break
             except robloxapi.utils.errors.BadStatus:
                 await context.send(
@@ -58,12 +64,18 @@ class roblox(commands.Cog):
             return
         phantom_group = await roblox_client.get_group(3248486)
         requests = await phantom_group.get_join_requests()
-        roblox_user = await roblox_client.get_user(member)
+        member_object = await roblox_client.get_user(member)
+        member_id = member_object.id
+        member_link = f'https://www.roblox.com/users/{member_id}/profile'
+        log_channel = self.discord_client.get_channel(676604257905934399)
         for request in requests:
             if request.user.name == member:
                 await request.accept()
-                await phantom_group.promote(roblox_user.id)
+                await phantom_group.promote(member_id)
                 await context.send(f'{member} has been accepted into the PHANTOM group.')
+                embed = discord.Embed(title=f'User accepted by {context.author.nick}')
+                embed.add_field(name='Roblox Name', value=f"[{member_object.name}]({member_link})")
+                await log_channel.send(embed=embed)
                 return
         await context.send(f"{member} couldn't be found in the join requests.")
 
@@ -76,15 +88,24 @@ class roblox(commands.Cog):
             await context.send(f'This command requires the ``VEIL`` role to be used.')
             return
         if member == 0:
-            await context.send(f'{context.author.mention} Command syntax: `p?promote <member>`')
+            await context.send(f'{context.author.mention} Command syntax: `p?demote <member>`')
             return
         phantom_group = await roblox_client.get_group(3248486)
+        log_channel = self.discord_client.get_channel(676604257905934399)
         member_object = await roblox_client.get_user(member)
         member_id = member_object.id
+        member_link = f'https://www.roblox.com/users/{member_id}/profile'
+        old_rank = (await phantom_group.get_role_in_group(member_id)).name
         while True:
             try:
                 await phantom_group.promote(member_id)
                 await context.send(f"{member} has been promoted by {context.author.mention}")
+                new_rank = (await phantom_group.get_role_in_group(member_id)).name
+                embed = discord.Embed(title=f'User promoted by {context.author.nick}')
+                embed.add_field(name='Roblox Name', value=f"[{member_object.name}]({member_link})")
+                embed.add_field(name='Previous Rank', value=old_rank)
+                embed.add_field(name='Current Rank', value=new_rank)
+                await log_channel.send(embed=embed)
                 break
             except robloxapi.utils.errors.NotFound:
                 await context.send(f"Error; {member} couldn't be found in the group.")
@@ -105,18 +126,27 @@ class roblox(commands.Cog):
             await context.send(f'{context.author.mention} Command syntax: `p?demote <member>`')
             return
         phantom_group = await roblox_client.get_group(3248486)
+        log_channel = self.discord_client.get_channel(676604257905934399)
         member_object = await roblox_client.get_user(member)
         member_id = member_object.id
+        member_link = f'https://www.roblox.com/users/{member_id}/profile'
+        old_rank = (await phantom_group.get_role_in_group(member_id)).name
         while True:
             try:
                 await phantom_group.demote(member_id)
                 await context.send(f"{member} has been demoted by {context.author.mention}")
+                new_rank = (await phantom_group.get_role_in_group(member_id)).name
+                embed = discord.Embed(title=f'User demoted by {context.author.nick}')
+                embed.add_field(name='Roblox Name', value=f"[{member_object.name}]({member_link})")
+                embed.add_field(name='Previous Rank', value=old_rank)
+                embed.add_field(name='Current Rank', value=new_rank)
+                await log_channel.send(embed=embed)
                 break
             except robloxapi.utils.errors.NotFound:
                 await context.send(f"Error; {member} couldn't be found in the group.")
                 break
             except robloxapi.utils.errors.BadStatus:
-                await context.send(f"Error; {member} has too high of a role to be promoted.")
+                await context.send(f"Error; {member} has too high of a role to be demoted.")
                 break
 
 
