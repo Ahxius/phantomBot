@@ -4,6 +4,7 @@ import robloxapi
 from robloxapi.utils import errors
 import os
 from dotenv import load_dotenv
+import asyncio
 
 load_dotenv()
 COOKIE = os.getenv('ROBLOX_COOKIE')
@@ -47,7 +48,7 @@ class roblox(commands.Cog):
                 break
             except robloxapi.utils.errors.BadStatus:
                 await context.send(
-                    f"Error; either I couldn't find user {member}, or I don't have high enough permissions "
+                    f"Error: either I couldn't find user {member}, or I don't have high enough permissions "
                     f"to exile them.")
                 break
 
@@ -71,8 +72,11 @@ class roblox(commands.Cog):
         for request in requests:
             if request.user.name == member_object.name:
                 await request.accept()
+                try:
+                    await phantom_group.promote(member_id)
+                except Exception as e:
+                    await context.send(f'Error: {e}')
                 await context.send(f'{member} has been accepted into the PHANTOM group.')
-                await phantom_group.promote(member_id)
                 embed = discord.Embed(title=f'User accepted by {context.author.nick}')
                 embed.add_field(name='Roblox Name', value=f"[{member_object.name}]({member_link})")
                 await log_channel.send(embed=embed)
@@ -95,7 +99,11 @@ class roblox(commands.Cog):
         member_object = await roblox_client.get_user(member)
         member_id = member_object.id
         member_link = f'https://www.roblox.com/users/{member_id}/profile'
-        old_rank = (await phantom_group.get_role_in_group(member_id)).name
+        try:
+            old_rank = (await phantom_group.get_role_in_group(member_id)).name
+        except Exception as e:
+            await context.send(f'Error: {e}')
+            return
         while True:
             try:
                 await phantom_group.promote(member_id)
@@ -108,10 +116,10 @@ class roblox(commands.Cog):
                 await log_channel.send(embed=embed)
                 break
             except robloxapi.utils.errors.NotFound:
-                await context.send(f"Error; {member} couldn't be found in the group.")
+                await context.send(f"Error: {member} couldn't be found in the group.")
                 break
             except robloxapi.utils.errors.BadStatus:
-                await context.send(f"Error; {member} has too high of a role to be promoted.")
+                await context.send(f"Error: {member} has too high of a role to be promoted.")
                 break
 
     @commands.command(name='demote', aliases=['d'], help='Demotes given user')
@@ -142,12 +150,10 @@ class roblox(commands.Cog):
                 embed.add_field(name='Current Rank', value=new_rank)
                 await log_channel.send(embed=embed)
                 break
-            except robloxapi.utils.errors.NotFound:
-                await context.send(f"Error; {member} couldn't be found in the group.")
-                break
-            except robloxapi.utils.errors.BadStatus:
-                await context.send(f"Error; {member} has too high of a role to be demoted.")
-                break
+            except Exception as e:
+                await context.send(f'Error: {e}')
+                return
+
 
 
 def setup(discord_client):
