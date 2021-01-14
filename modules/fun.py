@@ -34,6 +34,13 @@ class fun(commands.Cog):
         await asyncio.sleep(3)
         await message.edit(embed=boom_embed)
 
+    @commands.command(name='mega', hidden=True)
+    async def mega(self, context):
+        if context.author.id != 398633288077410305:
+            await context.send('only varcexion can use this')
+            return
+        await context.send('https://cdn.discordapp.com/attachments/783474197526609930/799297338191511552/unknown.png')
+
 
 def setup(client):
     client.add_cog(fun(client))
