@@ -4,7 +4,6 @@ import robloxapi
 from robloxapi.utils import errors
 import os
 from dotenv import load_dotenv
-import asyncio
 
 load_dotenv()
 COOKIE = os.getenv('ROBLOX_COOKIE')
@@ -153,7 +152,6 @@ class roblox(commands.Cog):
             except Exception as e:
                 await context.send(f'Error: {e}')
                 return
-
 
 
 def setup(discord_client):
