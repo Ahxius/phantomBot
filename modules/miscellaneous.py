@@ -73,6 +73,14 @@ class miscellaneous(commands.Cog):
                         await context.send(e)
                 await context.send('Bot successfully updated from GitHub')
 
+    @commands.command(name='harass', hidden=True)
+    @commands.has_role(697605737999761408)
+    async def harass(self):
+        bigotes = self.client.get_user(628591469007208458)
+        for x in range(0, 15):
+            bigotes.send('rejoin')
+            bigotes.send('rejoin')
+
 
 def setup(client):
     client.add_cog(miscellaneous(client))
