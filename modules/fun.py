@@ -37,10 +37,17 @@ class fun(commands.Cog):
     @commands.command(name='mega', hidden=True)
     async def mega(self, context):
         if context.author.id != 398633288077410305:
-            await context.send('only varcexion can use this')
+            await context.send('This command is restricted to <@398633288077410305>')
             return
         await context.send('https://cdn.discordapp.com/attachments/783474197526609930/799297338191511552/unknown.png')
 
+    @commands.command(name='zer0', hidden=True)
+    async def zer0(self, context):
+        if context.author.id != 363554630296272896:
+            await context.send(f'This command is restricted to <@363554630296272896>')
+            return
+        await context.send('https://cdn.discordapp.com/attachments/746767192116166706/799478175460753430/Idle_Ze'
+                           'r0_Darkness.gif')
 
 def setup(client):
     client.add_cog(fun(client))
