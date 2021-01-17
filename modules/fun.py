@@ -49,5 +49,13 @@ class fun(commands.Cog):
         await context.send('https://cdn.discordapp.com/attachments/746767192116166706/799478175460753430/Idle_Ze'
                            'r0_Darkness.gif')
 
+    @commands.command(name='neko', hidden=True)
+    async def neko(self, context):
+        if context.author.id != (449622694682689547 or 609870075037483008):
+            await context.send(f"This is <@609870075037483008>'s private command.")
+            return
+        await context.send('https://cdn.discordapp.com/attachments/729950020010508398/800449825496629298/unknown.png')
+
+
 def setup(client):
     client.add_cog(fun(client))
