@@ -43,7 +43,8 @@ class fun(commands.Cog):
 
     @commands.command(name='zer0', hidden=True)
     async def zer0(self, context):
-        if context.author.id != 363554630296272896:
+        if context.author.id != 363554630296272896 and context.author.id != 288079528914452480 and context.author.id \
+                != 326817025638924289 and context.author.id != 634649274533150720:
             await context.send(f'This command is restricted to Zer0')
             return
         await context.send('https://cdn.discordapp.com/attachments/746767192116166706/799478175460753430/Idle_Ze'
