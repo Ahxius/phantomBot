@@ -55,7 +55,11 @@ class fun(commands.Cog):
         if context.author.id != 449622694682689547 and context.author.id != 609870075037483008:
             await context.send(f"This is lock's private command.")
             return
-        await context.send('https://cdn.discordapp.com/attachments/729950020010508398/800449825496629298/unknown.png')
+        await context.send('this is weird, hence there no longer being an image of it')
+
+    @commands.command(name='bounce', hidden=True)
+    async def bounce(self, context):
+        await context.send('https://cdn.discordapp.com/attachments/434427391729729552/803716155947614250/Wtf.gif')
 
 
 def setup(client):
