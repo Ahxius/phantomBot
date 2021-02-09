@@ -48,7 +48,7 @@ class fun(commands.Cog):
             await context.send(f'This command is restricted to Zer0')
             return
         await context.send('https://cdn.discordapp.com/attachments/746767192116166706/808535856763502592/skin_guard.png'
-                           '')
+                           )
 
     @commands.command(name='neko', hidden=True)
     async def neko(self, context):
