@@ -91,7 +91,7 @@ class roblox(commands.Cog):
             await context.send(f'This command requires the ``VEIL`` role to be used.')
             return
         if member == 0:
-            await context.send(f'{context.author.mention} Command syntax: `p?demote <member>`')
+            await context.send(f'{context.author.mention} Command syntax: `p?promote <member>`')
             return
         phantom_group = await roblox_client.get_group(3248486)
         log_channel = self.discord_client.get_channel(676604257905934399)
