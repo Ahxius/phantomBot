@@ -59,7 +59,7 @@ class fun(commands.Cog):
 
     @commands.command(name='bounce', hidden=True)
     async def bounce(self, context):
-       await context.send('https://cdn.discordapp.com/attachments/434427391729729552/803716155947614250/Wtf.gif')
+        await context.send('https://cdn.discordapp.com/attachments/434427391729729552/803716155947614250/Wtf.gif')
 
 
 def setup(client):
