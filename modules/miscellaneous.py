@@ -4,9 +4,11 @@ import sys
 import random
 import os
 from dotenv import load_dotenv
+import requests
 
 load_dotenv()
 git_pass = os.getenv('GITHUB_PASSWORD')
+paste_token = os.getenv('PASTE_TOKEN')
 
 
 class miscellaneous(commands.Cog):
@@ -72,6 +74,15 @@ class miscellaneous(commands.Cog):
                     except Exception as e:
                         await context.send(e)
                 await context.send('Bot successfully updated from GitHub')
+
+    @commands.command(name='dpaste', hidden=True, aliases=['text', 'txt'])
+    async def dpaste(self, context, expiry=None, *, content=None):
+        if not expiry or not content:
+            await context.send("p?txt <ttl (days)> <content>")
+            return
+        payload = {"content": content, "expiry_days": int(expiry)}
+        request = requests.post("https://dpaste.com/api/", data=payload)
+        await context.send(f"Here's your link: {request.text}")
 
 
 def setup(client):
