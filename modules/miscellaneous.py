@@ -57,7 +57,8 @@ class miscellaneous(commands.Cog):
     @commands.command(name='update', hidden=True)
     @commands.is_owner()
     async def update(self, context):
-        clone_exit = os.system(f'git clone https://Ahxius:{git_pass}@github.com/Ahxius/phantomBot.git ~/phantomBot-temp')
+        clone_exit = os.system(f'git clone https://Ahxius:{git_pass}@github.com/Ahxius/phantomBot.git '
+                               f'~/phantomBot-temp')
         if clone_exit == 0:
             await context.send('Clone successful, copying files into main directory.')
             copy_exit = os.system('cd ~/phantomBot-temp && cp ~/phantomBot-temp/*.py ~/phantomBot && cp '
@@ -75,7 +76,7 @@ class miscellaneous(commands.Cog):
                         await context.send(e)
                 await context.send('Bot successfully updated from GitHub')
 
-    @commands.command(name='dpaste', hidden=True, aliases=['text', 'txt'])
+    @commands.command(name='dpaste', aliases=['text', 'txt'])
     async def dpaste(self, context, expiry=None, *, content=None):
         if not expiry or not content:
             await context.send("p?txt <ttl (days)> <content>")
