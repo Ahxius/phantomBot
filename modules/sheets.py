@@ -93,7 +93,10 @@ class sheets(commands.Cog):
         embed.add_field(name='Success:', value=''.join(users_success))
         if len(users_fail) > 0:
             embed.add_field(name='Failure:', value=''.join(users_fail))
+        await second.delete()
+        await response.delete()
         await channel.send(embed=embed)
+        await context.message.add_reaction('\U00002705')
 
 
 def get_info(username):
