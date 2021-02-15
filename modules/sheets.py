@@ -37,7 +37,7 @@ class sheets(commands.Cog):
         self.client = client
 
     @commands.command(name='getinfo', aliases=['info', 'ap', 'rp'])
-    async def getinfo(self, context, user: str = None):
+    async def getinfo(self, context, *, user: str = None):
         if not user:
             await context.send('``p?getinfo <user>``')
             return
