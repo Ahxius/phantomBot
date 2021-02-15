@@ -77,12 +77,18 @@ class miscellaneous(commands.Cog):
                 await context.send('Bot successfully updated from GitHub')
 
     @commands.command(name='dpaste', aliases=['text', 'txt'])
-    async def dpaste(self, context, expiry=None, *, content=None):
-        if not expiry or not content:
-            await context.send("p?txt <ttl (days)> <content>")
+    async def dpaste(self, context, expiry=None, language=None):
+        if not expiry:
+            await context.send("``p?txt <ttl (days)> <filetype (opt)>``")
             return
-        payload = {"content": content, "expiry_days": int(expiry)}
+        await context.send(f"{context.author.mention}, please send your text.")
+
+        def check(m):
+            return m.author == context.author and m.channel == context.channel
+        content = await self.client.wait_for('message', check=check)
+        payload = {"content": content.content, "expiry_days": int(expiry), "syntax": language}
         request = requests.post("https://dpaste.com/api/", data=payload)
+        await content.delete()
         await context.send(f"Here's your link: {request.text}")
 
 
