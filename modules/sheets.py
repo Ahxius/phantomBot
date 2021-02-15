@@ -66,7 +66,7 @@ class sheets(commands.Cog):
         users_success = []
         users_fail = []
         embed = Embed(title=f'AP added by {context.author.name}')
-        second = await context.send(f'{context.author.mention}; P(EP), G(amenight), M(P), J(Event)')
+        second = await context.send(f'{context.author.mention} - P(EP), G(amenight), M(P), J(Event), (T)raining')
 
         def check(m):
             return m.author.id == context.author.id and m.channel.id == context.channel.id
@@ -77,6 +77,8 @@ class sheets(commands.Cog):
             to_add = 1.5
         elif response.content == 'J':
             to_add = 2
+        elif response.content == 'T':
+            to_add = 1
         else:
             await second.delete()
             await context.send('Invalid input. Please retry.')
