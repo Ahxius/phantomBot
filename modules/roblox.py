@@ -71,11 +71,7 @@ class roblox(commands.Cog):
         for request in requests:
             if request.user.name == member_object.name:
                 await request.accept()
-                try:
-                    await phantom_group.promote(member_id)
-                except Exception as e:
-                    await context.send(f'Error: {e}')
-                await context.send(f'{member} has been accepted into the PHANTOM group.')
+                await context.send(f"{member} has been accepted into the PHANTOM group. Don't forget to promote them.")
                 embed = discord.Embed(title=f'User accepted by {context.author.nick}')
                 embed.add_field(name='Roblox Name', value=f"[{member_object.name}]({member_link})")
                 await log_channel.send(embed=embed)
@@ -152,6 +148,39 @@ class roblox(commands.Cog):
             except Exception as e:
                 await context.send(f'Error: {e}')
                 return
+
+    @commands.command(name='getinfo', aliases=['roblox', 'pull'], help="Get's users Robine information")
+    async def getinfo(self, context, member: str = None):
+        if not member:
+            await context.send(f'{context.author.mention} Command syntax: `p?getinfo <user>')
+            return
+        robine_group = await roblox_client.get_group(2808906)
+        phantom_group = await roblox_client.get_group(3248486)
+        roblox_user = await roblox_client.get_user(name=member)
+        try:
+            robine_rank = await robine_group.get_role_in_group(roblox_user.id)
+        except errors.NotFound:
+            robine_rank = False
+        except AttributeError:
+            await context.send(f"Error: {member} is not a current Roblox username.")
+            return
+        try:
+            phantom_rank = await phantom_group.get_role_in_group(roblox_user.id)
+        except errors.NotFound:
+            phantom_rank = False
+        except AttributeError:
+            await context.send(f"Error: {member} is not a current Roblox username.")
+            return
+        embed = discord.Embed(title=roblox_user.name, url=f'https://www.roblox.com/users/{roblox_user.id}/profile')
+        if robine_rank:
+            embed.add_field(name='Robine Rank', value=robine_rank.name)
+        else:
+            embed.add_field(name='Robine Rank', value='Absent')
+        if phantom_rank:
+            embed.add_field(name='PHANTOM Rank', value=phantom_rank.name)
+        else:
+            embed.add_field(name='PHANTOM Rank', value='Absent')
+        await context.send(embed=embed)
 
 
 def setup(discord_client):

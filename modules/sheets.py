@@ -36,10 +36,10 @@ class sheets(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.command(name='getinfo', aliases=['info', 'ap', 'rp'])
-    async def getinfo(self, context, *, user: str = None):
+    @commands.command(name='checksheet', aliases=['info', 'ap', 'rp'])
+    async def checksheet(self, context, *, user: str = None):
         if not user:
-            await context.send('``p?getinfo <user>``')
+            await context.send('``p?checksheet <user>``')
             return
         status, ap, rp = get_info(user)
         if not status:
