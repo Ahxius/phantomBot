@@ -1,11 +1,15 @@
 import os
 from dotenv import load_dotenv
 from discord.ext.commands import Bot
+from discord import Intents
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
+intents = Intents.default()
+intents.voice_states = True
 
-client = Bot(command_prefix='p?')
+
+client = Bot(command_prefix='p?', intents=intents)
 
 for cog in os.listdir('modules'):
     if not cog.endswith('.py'):

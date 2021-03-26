@@ -1,7 +1,6 @@
 from discord.ext import commands
 import asyncio
 import sys
-import random
 import os
 from dotenv import load_dotenv
 import requests
@@ -29,24 +28,6 @@ class miscellaneous(commands.Cog):
         message = context.message
         await message.delete()
         await context.send(content)
-
-    @commands.command(name='giveaway', aliases=['g'], help='Begins a giveaway', hidden=True)
-    async def giveaway(self, context, hours=None, *, prize=None):
-        if hours and prize is None or hours or prize is None:
-            await context.send(f'{context.author.mention} Command syntax: ``p?giveaway <time in hours> <prize>``')
-            return
-        channel = self.client.get_channel(722141971736559695)  # change
-        message = await channel.send(f"{context.author.mention} is giving away {prize}! Giveaway will end in {hours}"
-                                     f" hours.")
-        await message.add_reaction('\U0001f389')
-        time = float(hours) * 60 * 60
-        await asyncio.sleep(time)
-        message = await channel.fetch_message(message.id)
-        user = await message.reactions[0].users().flatten()
-        winner = random.choice(user)
-        while winner.id == 717445341217030238:
-            winner = random.choice(user)
-        await channel.send(f'{winner.mention} has won the giveaway! DM {context.author.mention} to claim.')
 
     @commands.command(name='shutdown', aliases=['sd'], hidden=True)
     @commands.is_owner()
@@ -91,22 +72,47 @@ class miscellaneous(commands.Cog):
         await content.delete()
         await context.send(f"Here's your link: {request.text}")
 
-    # @commands.command(name='channel', aliases=['private', 'vc', 'temp'])
-    # async def channel(self, context, quantity: int = None):
-    #
-    #     if not quantity:
-    #         await context.send("``p?channel <max amt of people>``")
-    #         return
-    #     phantom_server = await self.client.get_guild(364962599508508672)
-    #     categories = await phantom_server.categories
-    #     found = False
-    #     for category in categories:
-    #         if category.id == '824845560992759849':
-    #             private_category = category
-    #             break
-    #     await phantom_server.create_voice_channel(name='Private VC', user_limit=quantity,
-    #                                               reason=f'Requested by {context.author.nick}',
-    #                                               category=private_category)
+    @commands.command(name='channel', aliases=['private', 'vc', 'temp'])
+    async def channel(self, context, quantity: int = None):
+
+        if not quantity:
+            await context.send("``p?channel <max amt of people>``")
+            return
+        phantom_server = self.client.get_guild(364962599508508672)
+        for category in phantom_server.categories:
+            if category.id == 824845560992759849:
+                private_category = category
+                break
+        x = 1
+        for channel in phantom_server.voice_channels:
+            if 'Private VC' in channel.name:
+                x += 1
+        # noinspection PyUnboundLocalVariable
+        voice_channel = await phantom_server.create_voice_channel(name=f'Private VC #{x}', user_limit=quantity,
+                                                                  reason=f'Requested by {context.author.nick}',
+                                                                  category=private_category)
+        await asyncio.sleep(30)
+        if not voice_channel.members:
+            await context.send(f'{context.author.mention}, your private VC timed out.')
+            await voice_channel.delete()
+
+    @commands.Cog.listener()
+    async def on_voice_state_update(self, member, before, after):
+        if 'Private VC' in before.channel.name and not before.channel.members:
+            await before.channel.delete()
+
+    @commands.command(name='clean')
+    async def clean(self, context):
+        member_roles = context.author.roles
+        phantom_server = self.client.get_guild(364962599508508672)
+        shroud_role = phantom_server.get_role(761957228151832587)
+        if shroud_role not in member_roles and context.author.id != 193051160616239104:
+            await context.send(f'You do not have proper permissions to use this command.')
+            return
+        voice_channels = phantom_server.voice_channels
+        for channel in voice_channels:
+            if 'Private VC' in channel.name:
+                await channel.delete()
 
 
 def setup(client):
