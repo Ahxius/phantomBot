@@ -72,7 +72,8 @@ class miscellaneous(commands.Cog):
         await content.delete()
         await context.send(f"Here's your link: {request.text}")
 
-    @commands.command(name='channel', aliases=['private', 'vc', 'temp'])
+   
+@commands.command(name='channel', aliases=['private', 'vc', 'temp'])
     async def channel(self, context, quantity: int = None):
 
         if not quantity:
@@ -92,6 +93,8 @@ class miscellaneous(commands.Cog):
                                                                   reason=f'Requested by {context.author.nick}',
                                                                   category=private_category)
         await asyncio.sleep(30)
+        if voice_channel.name is None:
+            return
         if not voice_channel.members:
             await context.send(f'{context.author.mention}, your private VC timed out.')
             await voice_channel.delete()
