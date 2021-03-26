@@ -93,21 +93,20 @@ class miscellaneous(commands.Cog):
 
     # @commands.command(name='channel', aliases=['private', 'vc', 'temp'])
     # async def channel(self, context, quantity: int = None):
+    #
     #     if not quantity:
     #         await context.send("``p?channel <max amt of people>``")
     #         return
     #     phantom_server = await self.client.get_guild(364962599508508672)
     #     categories = await phantom_server.categories
+    #     found = False
     #     for category in categories:
-    #         if category.id == ''
+    #         if category.id == '824845560992759849':
+    #             private_category = category
+    #             break
     #     await phantom_server.create_voice_channel(name='Private VC', user_limit=quantity,
-    #                                               reason=f'Requested by {context.author.nick}', category=)
-
-    @commands.command(name='create')
-    async def create(self, context):
-        phantom_server = await self.client.get_guild(364962599508508672)
-        await phantom_server.create_category(name='- - { PHANTOM PRIVATE } - -', position=5)
-
+    #                                               reason=f'Requested by {context.author.nick}',
+    #                                               category=private_category)
 
 
 def setup(client):
