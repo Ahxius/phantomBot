@@ -72,11 +72,9 @@ class miscellaneous(commands.Cog):
         await content.delete()
         await context.send(f"Here's your link: {request.text}")
 
-   
-@commands.command(name='channel', aliases=['private', 'vc', 'temp'])
+    @commands.command(name='channel', aliases=['private', 'vc', 'temp'])
     async def channel(self, context, quantity: int = None):
-
-        if not quantity:
+        if not quantity or quantity is not int:
             await context.send("``p?channel <max amt of people>``")
             return
         phantom_server = self.client.get_guild(364962599508508672)
