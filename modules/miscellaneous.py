@@ -74,7 +74,7 @@ class miscellaneous(commands.Cog):
 
     @commands.command(name='channel', aliases=['private', 'vc', 'temp'])
     async def channel(self, context, quantity: int = None):
-        if not quantity or quantity is not int:
+        if not quantity:
             await context.send("``p?channel <max amt of people>``")
             return
         phantom_server = self.client.get_guild(364962599508508672)
