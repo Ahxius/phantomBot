@@ -79,7 +79,7 @@ class miscellaneous(commands.Cog):
             return
         phantom_server = self.client.get_guild(364962599508508672)
         for category in phantom_server.categories:
-            if category.id == 824845560992759849:
+            if category.id == 825932087700881408:
                 private_category = category
                 break
         x = 1
