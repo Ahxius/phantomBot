@@ -91,7 +91,7 @@ class miscellaneous(commands.Cog):
                                                                   reason=f'Requested by {context.author.nick}',
                                                                   category=private_category)
         await asyncio.sleep(30)
-        if voice_channel.name is None:
+        if not await phantom_server.get_channel(voice_channel.id).name:
             return
         if not voice_channel.members:
             await context.send(f'{context.author.mention}, your private VC timed out.')
