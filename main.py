@@ -9,7 +9,7 @@ intents = Intents.default()
 intents.voice_states = True
 
 
-client = Bot(command_prefix='lizardsucks!', intents=intents)
+client = Bot(command_prefix='p?', intents=intents)
 
 for cog in os.listdir('modules'):
     if not cog.endswith('.py'):

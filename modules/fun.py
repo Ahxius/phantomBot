@@ -34,28 +34,12 @@ class fun(commands.Cog):
         await asyncio.sleep(3)
         await message.edit(embed=boom_embed)
 
-    @commands.command(name='mega', hidden=True)
-    async def mega(self, context):
-        if context.author.id != 398633288077410305:
-            await context.send('This command is restricted to Varcexion')
-            return
-        await context.send('https://cdn.discordapp.com/attachments/783474197526609930/799297338191511552/unknown.png')
-
-    @commands.command(name='zer0', hidden=True)
-    async def zer0(self, context):
-        if context.author.id != 363554630296272896 and context.author.id != 288079528914452480 and context.author.id \
-                != 326817025638924289 and context.author.id != 634649274533150720:
-            await context.send(f'This command is restricted to Zer0')
-            return
-        await context.send('https://cdn.discordapp.com/attachments/746767192116166706/808535856763502592/skin_guard.png'
-                           )
-
     @commands.command(name='neko', hidden=True)
     async def neko(self, context):
         if context.author.id != 449622694682689547 and context.author.id != 609870075037483008:
             await context.send(f"This is lock's private command.")
             return
-        await context.send('this is weird, hence there no longer being an image of it')
+        await context.send("hii lock i don't remember the gif that you wanted me to change this to")
 
     @commands.command(name='bounce', hidden=True)
     async def bounce(self, context):

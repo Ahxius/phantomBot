@@ -5,7 +5,6 @@ from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from discord import Embed
-from pprint import pprint
 
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 SPREADSHEET_ID = '1mxGUjQkNnYPHEo40Kt8LYDzuS6--_6x_M4NRRhfFVIk'
