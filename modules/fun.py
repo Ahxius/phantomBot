@@ -1,6 +1,8 @@
 from discord.ext import commands
 import discord
+from playsound import playsound
 import asyncio
+from os import remove
 
 
 class fun(commands.Cog):
@@ -37,13 +39,27 @@ class fun(commands.Cog):
     @commands.command(name='neko', hidden=True)
     async def neko(self, context):
         if context.author.id != 449622694682689547 and context.author.id != 609870075037483008:
-            await context.send(f"This is lock's private command.")
+            await context.send(f"This is lock's     private command.")
             return
         await context.send("hii lock i don't remember the gif that you wanted me to change this to")
 
     @commands.command(name='bounce', hidden=True)
     async def bounce(self, context):
         await context.send('https://cdn.discordapp.com/attachments/434427391729729552/803716155947614250/Wtf.gif')
+
+    @commands.command(name='play')
+    async def play(self, context):
+        # phantom_guild =
+        # if shade_ids not in context.author.roles:
+        #     await context.send(f'{context.author.mention}; only members of SHADE can use this command.')
+        #     return
+        attachment = context.message.attachments[0]
+        if not attachment.filename.endswith('.mp3'):
+            await context.send(f'{context.author.mention}; you can only send MP3 or WAV files at the time.')
+            return
+        await attachment.save('song.mp3')
+        playsound('song.mp3', False)
+        remove('song.mp3')
 
 
 def setup(client):
