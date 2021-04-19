@@ -47,19 +47,19 @@ class fun(commands.Cog):
     async def bounce(self, context):
         await context.send('https://cdn.discordapp.com/attachments/434427391729729552/803716155947614250/Wtf.gif')
 
-    @commands.command(name='play')
-    async def play(self, context):
-        # phantom_guild =
-        # if shade_ids not in context.author.roles:
-        #     await context.send(f'{context.author.mention}; only members of SHADE can use this command.')
-        #     return
-        attachment = context.message.attachments[0]
-        if not attachment.filename.endswith('.mp3'):
-            await context.send(f'{context.author.mention}; you can only send MP3 or WAV files at the time.')
-            return
-        await attachment.save('song.mp3')
-        playsound('song.mp3', False)
-        remove('song.mp3')
+    # @commands.command(name='play')
+    # async def play(self, context):
+    #     # phantom_guild =
+    #     # if shade_ids not in context.author.roles:
+    #     #     await context.send(f'{context.author.mention}; only members of SHADE can use this command.')
+    #     #     return
+    #     attachment = context.message.attachments[0]
+    #     if not attachment.filename.endswith('.mp3'):
+    #         await context.send(f'{context.author.mention}; you can only send MP3 or WAV files at the time.')
+    #         return
+    #     await attachment.save('song.mp3')
+    #     playsound('song.mp3', False)
+    #     remove('song.mp3')
 
 
 def setup(client):
