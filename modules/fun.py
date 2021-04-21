@@ -5,7 +5,7 @@ import asyncio
 from os import remove
 
 
-class fun(commands.Cog):
+class Fun(commands.Cog):
     def __init__(self, client):
         self.client = client
 
@@ -63,4 +63,4 @@ class fun(commands.Cog):
 
 
 def setup(client):
-    client.add_cog(fun(client))
+    client.add_cog(Fun(client))

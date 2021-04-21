@@ -31,7 +31,7 @@ service = build('sheets', 'v4', credentials=creds)
 sheet = service.spreadsheets()
 
 
-class sheets(commands.Cog):
+class Sheets(commands.Cog):
     def __init__(self, client):
         self.client = client
 
@@ -137,4 +137,4 @@ def update_info(username, addamt):
 
 
 def setup(client):
-    client.add_cog(sheets(client))
+    client.add_cog(Sheets(client))

@@ -10,7 +10,7 @@ git_pass = os.getenv('GITHUB_PASSWORD')
 paste_token = os.getenv('PASTE_TOKEN')
 
 
-class miscellaneous(commands.Cog):
+class Miscellaneous(commands.Cog):
     def __init__(self, client):
         self.client = client
 
@@ -117,4 +117,4 @@ class miscellaneous(commands.Cog):
 
 
 def setup(client):
-    client.add_cog(miscellaneous(client))
+    client.add_cog(Miscellaneous(client))

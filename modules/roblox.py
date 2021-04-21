@@ -11,7 +11,7 @@ COOKIE = os.getenv('ROBLOX_COOKIE')
 roblox_client = robloxapi.Client(COOKIE)
 
 
-class roblox(commands.Cog):
+class Roblox(commands.Cog):
     def __init__(self, discord_client):
         self.discord_client = discord_client
 
@@ -184,4 +184,4 @@ class roblox(commands.Cog):
 
 
 def setup(discord_client):
-    discord_client.add_cog(roblox(discord_client))
+    discord_client.add_cog(Roblox(discord_client))
