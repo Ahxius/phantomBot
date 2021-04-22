@@ -23,16 +23,16 @@ class Fun(commands.Cog):
     async def on_message(self, context):
         if 'ahxius' in context.content.lower() and 'inactive' in context.content.lower():
             await context.delete()
-            c.execute(f"SELECT COUNT(1) FROM AhxiusPoints WHERE user_id={context.author.id}")
+            c.execute(f"SELECT COUNT(1) FROM ahxiuspoints WHERE user_id={context.author.id}")
             if str(c.fetchone()[0]) == '0':
-                c.execute(f"INSERT INTO AhxiusPoints(user_id, points) VALUES ({context.author.id},1)")
+                c.execute(f"INSERT INTO ahxiuspoints(user_id, points) VALUES ({context.author.id},1)")
                 conn.commit()
                 await context.send(f'{context.author.message}, for calling Ahxius inactive, you now have 1'
                                    f' Ahxius point.')
             else:
                 points = int(c.fetchone()[1])
                 points += 1
-                c.execute(f"UPDATE AhxiusPoints SET points={points} WHERE user_id={context.author.id}")
+                c.execute(f"UPDATE ahxiuspoints SET points={points} WHERE user_id={context.author.id}")
                 await context.send(f'{context.author.message}, for calling Ahxius inactive, you now have {points}'
                                    f' Ahxius points.')
 
