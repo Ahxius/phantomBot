@@ -31,7 +31,7 @@ class Fun(commands.Cog):
                                    f' Ahxius point.')
             else:
                 c.execute(f"SELECT COUNT(1) FROM ahxiuspoints WHERE user_id={context.author.id}")
-                points = int(c.fetchone()[1])
+                points = int(c.fetchone()[0])
                 points += 1
                 c.execute(f"UPDATE ahxiuspoints SET points={points} WHERE user_id={context.author.id}")
                 await context.channel.send(f'{context.author.message}, for calling Ahxius inactive, you now have {points}'
