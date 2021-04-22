@@ -1,8 +1,6 @@
 from discord.ext import commands
 import discord
-# from playsound import playsound
 import asyncio
-# from os import remove
 
 
 class Fun(commands.Cog):
