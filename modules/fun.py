@@ -3,7 +3,7 @@ import discord
 import asyncio
 import sqlite3
 
-conn = sqlite3.connect('ahxius.db')
+conn = sqlite3.connect('ahxius')
 c = conn.cursor()
 
 
