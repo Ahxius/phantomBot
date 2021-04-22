@@ -21,6 +21,8 @@ class Fun(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, context):
+        if context.author.id == 717445341217030238:
+            return
         if 'ahxius' in context.content.lower() and 'inactive' in context.content.lower():
             await context.delete()
             c.execute(f"SELECT COUNT(1) FROM ahxiuspoints WHERE user_id={context.author.id}")
