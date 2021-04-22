@@ -1,8 +1,8 @@
 from discord.ext import commands
 import discord
-from playsound import playsound
+# from playsound import playsound
 import asyncio
-from os import remove
+# from os import remove
 
 
 class Fun(commands.Cog):
@@ -16,6 +16,11 @@ class Fun(commands.Cog):
         if payload.emoji.id == 399692392594407436:
             await channel.send('https://tenor.com/view/el-huevo-gif-18925090')
             print(payload.member.nick)
+
+    @commands.Cog.listener()
+    async def on_message(self, context):
+        if 'ahxius' in context.content.lower() and 'inactive' in context.content.lower():
+            await context.delete()
 
     @commands.command(name='wizardlizard', hidden=True, help='Become a wizard lizard today!')
     async def wizardlizard(self, context):
