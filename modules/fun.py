@@ -27,13 +27,14 @@ class Fun(commands.Cog):
             if str(c.fetchone()[0]) == '0':
                 c.execute(f"INSERT INTO ahxiuspoints(user_id, points) VALUES ({context.author.id},1)")
                 conn.commit()
-                await context.send(f'{context.author.message}, for calling Ahxius inactive, you now have 1'
+                await context.channel.send(f'{context.author.message}, for calling Ahxius inactive, you now have 1'
                                    f' Ahxius point.')
             else:
+                c.execute(f"SELECT COUNT(1) FROM ahxiuspoints WHERE user_id={context.author.id}")
                 points = int(c.fetchone()[1])
                 points += 1
                 c.execute(f"UPDATE ahxiuspoints SET points={points} WHERE user_id={context.author.id}")
-                await context.send(f'{context.author.message}, for calling Ahxius inactive, you now have {points}'
+                await context.channel.send(f'{context.author.message}, for calling Ahxius inactive, you now have {points}'
                                    f' Ahxius points.')
 
     @commands.command(name='wizardlizard', hidden=True, help='Become a wizard lizard today!')
