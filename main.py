@@ -12,7 +12,7 @@ intents.voice_states = True
 client = Bot(command_prefix='p?', intents=intents)
 
 
-class help_class(MinimalHelpCommand, hidden=True):
+class help_class(MinimalHelpCommand):
     async def send_pages(self):
         destination = self.get_destination()
         for page in self.paginator.pages:

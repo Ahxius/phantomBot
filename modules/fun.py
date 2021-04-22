@@ -1,6 +1,10 @@
 from discord.ext import commands
 import discord
 import asyncio
+import sqlite3
+
+conn = sqlite3.connect('ahxius.db')
+c = conn.cursor()
 
 
 class Fun(commands.Cog):
@@ -19,6 +23,16 @@ class Fun(commands.Cog):
     async def on_message(self, context):
         if 'ahxius' in context.content.lower() and 'inactive' in context.content.lower():
             await context.delete()
+            c.execute(f"SELECT COUNT(1) FROM AhxiusPoints WHERE user_id={context.author.id}")
+            if str(c.fetchone()[0]) == '0':
+                c.execute(f"INSERT INTO AhxiusPoints(user_id, points) VALUES ({context.author.id},1)")
+                conn.commit()
+            else:
+                points = int(c.fetchone()[1])
+                points += 1
+                c.execute(f"UPDATE AhxiusPoints SET points={points} WHERE user_id={context.author.id}")
+                await context.send(f'{context.author.message}, for calling Ahxius inactive, you now have {points}'
+                                   f' Ahxius points.')
 
     @commands.command(name='wizardlizard', hidden=True, help='Become a wizard lizard today!')
     async def wizardlizard(self, context):
