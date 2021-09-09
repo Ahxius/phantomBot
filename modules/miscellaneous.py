@@ -24,6 +24,7 @@ class Miscellaneous(commands.Cog):
             await context.send("This command requires either the ``SHROUD`` or ``Trial Overseer`` role in "
                                "order to use.")
             return
+        await context.message.add_reaction("\U00002705")
         await asyncio.sleep(604800)
         await context.send(f"{to_object.mention} - <@{context.message.raw_mentions[0]}>'s trial has ended.")
 
