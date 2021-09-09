@@ -26,7 +26,7 @@ class Miscellaneous(commands.Cog):
                                "order to use.")
             return
         await context.message.add_reaction("\U00002705")
-        await logging_channel.send(f"<@{context.message.raw_mentions[0]}> trial has begun.")
+        await logging_channel.send(f"<@{context.message.raw_mentions[0]}>'s trial has begun.")
         await asyncio.sleep(604800)
         await logging_channel.send(f"{to_object.mention} - <@{context.message.raw_mentions[0]}>'s trial has ended.")
 
