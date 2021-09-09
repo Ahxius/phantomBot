@@ -20,13 +20,15 @@ class Miscellaneous(commands.Cog):
         phantom_server = self.client.get_guild(364962599508508672)
         shroud_object = phantom_server.get_role(761957228151832587)
         to_object = phantom_server.get_role(607971962873970690)
+        logging_channel = phantom_server.get_channel(779820628827701258)
         if shroud_object not in member_roles and to_object not in member_roles:
             await context.send("This command requires either the ``SHROUD`` or ``Trial Overseer`` role in "
                                "order to use.")
             return
         await context.message.add_reaction("\U00002705")
+        await logging_channel.send(f"<@{context.message.raw_mentions[0]}> trial has begun.")
         await asyncio.sleep(604800)
-        await context.send(f"{to_object.mention} - <@{context.message.raw_mentions[0]}>'s trial has ended.")
+        await logging_channel.send(f"{to_object.mention} - <@{context.message.raw_mentions[0]}>'s trial has ended.")
 
     @commands.command(name='send', aliases=['s'], help='Sends message as PHANTOM bot')
     async def send(self, context, *, content: str = 0):
