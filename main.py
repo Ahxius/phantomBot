@@ -7,6 +7,7 @@ load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 intents = Intents.default()
 intents.voice_states = True
+intents.typing = True
 
 
 client = Bot(command_prefix='p?', intents=intents)
@@ -23,7 +24,7 @@ class help_class(MinimalHelpCommand):
 client.help_command = help_class()
 
 
-for module in os.listdir('modules'):
+for module in os.listdir('/home/ubuntu/phantomBot/modules'):
     if not module.endswith('.py'):
         continue
     try:
