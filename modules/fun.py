@@ -17,27 +17,6 @@ class Fun(commands.Cog):
         channel = self.client.get_channel(channel_id)
         if payload.emoji.id == 399692392594407436:
             await channel.send('https://tenor.com/view/el-huevo-gif-18925090')
-            print(payload.member.nick)
-
-    @commands.Cog.listener()
-    async def on_message(self, context):
-        if context.author.id == 717445341217030238:
-            return
-        if 'ahxius' in context.content.lower() and 'inactive' in context.content.lower():
-            await context.delete()
-            c.execute(f"SELECT COUNT(1) FROM ahxiuspoints WHERE user_id={context.author.id}")
-            if str(c.fetchone()[0]) == '0':
-                c.execute(f"INSERT INTO ahxiuspoints(user_id, points) VALUES ({context.author.id},1)")
-                conn.commit()
-                await context.channel.send(f'{context.author.mention}, for calling Ahxius inactive, you now have 1'
-                                   f' Ahxius point.')
-            else:
-                c.execute(f"SELECT COUNT(1) FROM ahxiuspoints WHERE user_id={context.author.id}")
-                points = int(c.fetchone()[0])
-                points += 1
-                c.execute(f"UPDATE ahxiuspoints SET points={points} WHERE user_id={context.author.id}")
-                await context.channel.send(f'{context.author.mention}, for calling Ahxius inactive, you now have {points}'
-                                   f' Ahxius points.')
 
     @commands.command(name='wizardlizard', hidden=True, help='Become a wizard lizard today!')
     async def wizardlizard(self, context):
@@ -61,13 +40,17 @@ class Fun(commands.Cog):
     @commands.command(name='neko', hidden=True)
     async def neko(self, context):
         if context.author.id != 449622694682689547 and context.author.id != 609870075037483008:
-            await context.send(f"This is lock's     private command.")
+            await context.send(f"This is lock's private command.")
             return
         await context.send("hii lock i don't remember the gif that you wanted me to change this to")
 
     @commands.command(name='bounce', hidden=True)
     async def bounce(self, context):
         await context.send('https://cdn.discordapp.com/attachments/434427391729729552/803716155947614250/Wtf.gif')
+
+    @commands.command(name="godmode", hidden=True)
+    async def godmode(self, context):
+        await context.author.edit(reason="ROMANIAN ALERT", nick=f'[ROMANIAN] {context.author.nick}')
 
 
 def setup(client):
