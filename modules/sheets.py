@@ -10,8 +10,8 @@ SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 SPREADSHEET_ID = '1mxGUjQkNnYPHEo40Kt8LYDzuS6--_6x_M4NRRhfFVIk'
 RANGE_NAME = 'Logging Sheet!B7:F'
 creds = None
-if os.path.exists('token.pickle'):
-    with open('token.pickle', 'rb') as token:
+if os.path.exists('/home/ubuntu/phantomBot/token.pickle'):
+    with open('/home/ubuntu/phantomBot/token.pickle', 'rb') as token:
         creds = pickle.load(token)
         # If there are no (valid) credentials available, let the user log in.
 if not creds or not creds.valid:
@@ -19,10 +19,10 @@ if not creds or not creds.valid:
         creds.refresh(Request())
     else:
         flow = InstalledAppFlow.from_client_secrets_file(
-            'credentials.json', SCOPES)
+            '/home/ubuntu/phantomBot/credentials.json', SCOPES)
         creds = flow.run_local_server(port=0)
     # Save the credentials for the next run
-    with open('token.pickle', 'wb') as token:
+    with open('/home/ubuntu/phantomBot/token.pickle', 'wb') as token:
         pickle.dump(creds, token)
 
 service = build('sheets', 'v4', credentials=creds)
