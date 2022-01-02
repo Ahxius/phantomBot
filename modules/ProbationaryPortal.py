@@ -27,10 +27,10 @@ class ProbationaryPortal(commands.Cog):
         if message.channel.id != logsChannel.id or len(message.embeds) == 0:
             return
         embed = message.embeds[0]
-        username = embed.title
+        username = embed.author.name
         rawTime = None
         for field in embed.fields:
-            if field.name == "Recorded Time:":
+            if field.name == "__Recorded Time:__":
                 rawTime = field.value
         time = (int(rawTime[:2]) * 3600) + (int(rawTime[3:5]) * 60) + int(rawTime[6:8])
         try:
