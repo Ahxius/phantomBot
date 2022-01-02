@@ -45,6 +45,10 @@ class ProbationaryPortal(commands.Cog):
 
     @commands.command("addevent")
     async def addevent(self, context):
+        if self.client.get_guild(364962599508508672).get_role(697605737999761408) not in context.author.roles and \
+                self.client.get_guild(364962599508508672).get_role(797923064004083732) not in context.author.roles:
+            await context.send(f'This command requires either the ``VEIL`` or ``TRIAL EVALUATOR`` role to be used.')
+            return
         if len(context.message.content) == 10:
             await context.send(f'{context.author.mention}, please include a list of attendees separated by a space.')
             return
@@ -66,6 +70,10 @@ class ProbationaryPortal(commands.Cog):
 
     @commands.command("merit")
     async def merit(self, context, user, *reason):
+        if self.client.get_guild(364962599508508672).get_role(697605737999761408) not in context.author.roles and \
+                self.client.get_guild(364962599508508672).get_role(797923064004083732) not in context.author.roles:
+            await context.send(f'This command requires either the ``VEIL`` or ``TRIAL EVALUATOR`` role to be used.')
+            return
         if len(context.message.content) == 7:
             await context.send(f"{context.author.mention}, please include both the user's Roblox username and reason.")
         logChannel = self.client.get_guild(364962599508508672).get_channel(676604257905934399)
@@ -85,6 +93,10 @@ class ProbationaryPortal(commands.Cog):
 
     @commands.command("demerit")
     async def demerit(self, context, user, *reason):
+        if self.client.get_guild(364962599508508672).get_role(697605737999761408) not in context.author.roles and \
+                self.client.get_guild(364962599508508672).get_role(797923064004083732) not in context.author.roles:
+            await context.send(f'This command requires either the ``VEIL`` or ``TRIAL EVALUATOR`` role to be used.')
+            return
         if len(context.message.content) == 9:
             await context.send(
                 f"{context.author.mention}, please include both the user's Roblox username and reason.")
