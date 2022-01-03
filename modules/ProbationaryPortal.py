@@ -338,8 +338,8 @@ class ProbationaryPortal(commands.Cog):
 
     @commands.command("remove")
     async def remove(self, context, user: str = None):
-        if self.client.get_server(364962599508508672).get_role(697605737999761408) not in context.author.roles or not\
-                user:
+        if self.client.get_server(364962599508508672).get_role(697605737999761408) not in context.author.roles or \
+                len(user) == 0:
             await context.send(f"{context.author.mention}, make sure you have the VEIL role and are providing a user.")
             return
         try:
