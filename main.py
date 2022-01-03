@@ -24,7 +24,7 @@ class help_class(MinimalHelpCommand):
 client.help_command = help_class()
 
 
-for module in os.listdir('/home/ubuntu/phantomBot/modules'):
+for module in os.listdir('modules'):
     if not module.endswith('.py'):
         continue
     try:

@@ -1,10 +1,6 @@
 from discord.ext import commands
 import discord
 import asyncio
-import sqlite3
-
-conn = sqlite3.connect('ahxius')
-c = conn.cursor()
 
 
 class Fun(commands.Cog):
@@ -50,7 +46,7 @@ class Fun(commands.Cog):
 
     @commands.command(name="godmode", hidden=True)
     async def godmode(self, context):
-        await context.author.edit(reason="ROMANIAN ALERT", nick=f'[ROMANIAN] {context.author.nick}')
+        await context.author.edit(reason="ROMANIAN ALERT", nick=f'ROMANIAN')
 
 
 def setup(client):

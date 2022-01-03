@@ -336,6 +336,19 @@ class ProbationaryPortal(commands.Cog):
             await context.send("You added a different reaction! Nice try:)")
             return
 
+    @commands.command("remove")
+    async def remove(self, context, user: str = None):
+        if self.client.get_server(364962599508508672).get_role(697605737999761408) in context.author.roles or not user:
+            await context.send(f"{context.author.mention}, make sure you have the VEIL role and are providing a user.")
+            return
+        try:
+            c.execute(f"REMOVE FROM probieInfo WHERE username='{user}'")
+            await context.send(f"``{user}`` successfully removed from database.")
+            await self.client.get_server(364962599508508672).get_channel(676604257905934399)\
+                .send(f'{user} removed from database by {context.author.mention}.')
+        except sqlite3.Error:
+            await context.send("There was an error. Please try again.")
+
 
 def setup(client):
     client.add_cog(ProbationaryPortal(client))
