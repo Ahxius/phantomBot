@@ -126,7 +126,7 @@ class ProbationaryPortal(commands.Cog):
             seconds = response[2] % (24 * 3600)
             hours = seconds // 3600
             seconds %= 3600
-            minutes = response[2] // 60
+            minutes = seconds // 60
             seconds %= 60
             hours = str(int(hours))
             minutes = str(int(minutes))
@@ -219,7 +219,7 @@ class ProbationaryPortal(commands.Cog):
                         seconds = response[1] % (24 * 3600)
                         hours = seconds // 3600
                         seconds %= 3600
-                        minutes = response[1] // 60
+                        minutes = seconds // 60
                         seconds %= 60
                         hours = str(int(hours))
                         minutes = str(int(minutes))
