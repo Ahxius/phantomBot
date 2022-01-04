@@ -64,6 +64,7 @@ class ProbationaryPortal(commands.Cog):
                 c.execute(f"INSERT INTO probieInfo (username, eventsAttended, secondsPatrolled, merits, demerits) "
                           f"VALUES ('{user}', 1, 0, 0, 0) ")
         conn.commit()
+        await context.message.add_reaction("\U0001f44d")
         embed = Embed(title="Trial Event Added", color=0x000000, description=f"**Host:** {context.author.mention}\n"
                                                                              f"**Attendees:** {', '.join(users)}")
         await logChannel.send(embed=embed)
@@ -85,6 +86,7 @@ class ProbationaryPortal(commands.Cog):
             c.execute(f"INSERT INTO probieInfo (username, eventsAttended, secondsPatrolled, merits, demerits) "
                       f"VALUES ('{user}', 0, 0, 1, 0) ")
         conn.commit()
+        await context.message.add_reaction("\U0001f44d")
         embed = Embed(title="Trial Merit Given", color=0x000000, description=f"**Evaluator:** {context.author.mention}"
                                                                              f"\n"
                                                                              f"**Recipient:** {user}\n"
@@ -110,6 +112,7 @@ class ProbationaryPortal(commands.Cog):
             c.execute(f"INSERT INTO probieInfo (username, eventsAttended, secondsPatrolled, merits, demerits) "
                       f"VALUES ('{user}', 0, 0, 0, 1) ")
         conn.commit()
+        await context.message.add_reaction("\U0001f44d")
         embed = Embed(title="Trial Demerit Given", color=0x000000,
                       description=f"**Evaluator:** {context.author.mention}\n"
                                   f"**Recipient:** {user}\n"
