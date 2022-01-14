@@ -29,6 +29,7 @@ class Fun(commands.Cog):
         for user_id in user_ids:
             password = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(10))
             c.execute(f"UPDATE elHuevo SET password = {password}) WHERE user_id = {user_id}")
+            conn.commit()
             await self.client.get_user(user_id).send(f"Your El Huevo password has been changed to: ``{password}``")
 
     @daily_task.before_loop
