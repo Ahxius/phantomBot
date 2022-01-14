@@ -1,13 +1,19 @@
 import os
+import sqlite3
 from dotenv import load_dotenv
 from discord.ext.commands import Bot, MinimalHelpCommand
 from discord import Intents, Embed
+from datetime import datetime
+
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 intents = Intents.default()
 intents.voice_states = True
 intents.typing = True
+
+conn = sqlite3.connect('database.db')
+c = conn.cursor()
 
 
 client = Bot(command_prefix='p?', intents=intents)
