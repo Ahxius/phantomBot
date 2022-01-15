@@ -13,6 +13,7 @@ c = conn.cursor()
 class Fun(commands.Cog):
     def __init__(self, client):
         self.client = client
+        self.daily_task.start()
 
     @commands.Cog.listener()
     async def on_message(self, message):
@@ -25,16 +26,17 @@ class Fun(commands.Cog):
 
     @tasks.loop(hours=24)
     async def daily_task(self):
-        user_ids = c.execute("SELECT user_id FROM elHuevo").fetchall
+        user_ids = c.execute("SELECT user_id FROM elHuevo").fetchall()
         for user_id in user_ids:
             password = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(10))
-            c.execute(f"UPDATE elHuevo SET password = {password}) WHERE user_id = {user_id}")
+            c.execute(f"UPDATE elHuevo SET password = '{password}' WHERE user_id = {user_id[0]}")
             conn.commit()
-            await self.client.get_user(user_id).send(f"Your El Huevo password has been changed to: ``{password}``")
+            user = await self.client.fetch_user(user_id[0])
+            await user.send(f"Your El Huevo password has been changed to: ``{password}``")
 
     @daily_task.before_loop
     async def wait_until_midnight(self):
-        now = datetime.datetime.now().astimezone()
+        now = datetime.datetime.now()
         next_run = now.replace(hour=0, minute=0, second=0)
         if next_run < now:
             next_run += datetime.timedelta(days=1)
@@ -45,7 +47,6 @@ class Fun(commands.Cog):
     async def resetpassword(self, context):
         user_ids = c.execute("SELECT user_id FROM elHuevo").fetchall()
         for user_id in user_ids:
-            print
             user_password = ''.join(
                 random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(10))
             c.execute(f"UPDATE elHuevo SET password = '{user_password}' WHERE user_id = {user_id[0]}")
