@@ -161,10 +161,13 @@ class ProbationaryPortal(commands.Cog):
         await message.add_reaction("4️⃣")
 
         def check(reaction_checking, user_checking):
-            return user_checking == context.author
+            return user_checking == context.author and message.id == reaction_checking.message.id
 
         reaction, user = await self.client.wait_for('reaction_add', check=check)
         await message.delete()
+
+        def check(reaction_checking, user_checking):
+            return user_checking == context.author and lbMessage.id == reaction_checking.message.id
         if reaction.emoji == "1️⃣":
             page = 1
             count = 10
