@@ -35,7 +35,7 @@ class Sheets(commands.Cog):
     def __init__(self, client):
         self.client = client
 
-    @commands.command(name='checksheet', aliases=['info', 'ap', 'rp'])
+    @commands.command(name='checksheet', aliases=['info'])
     async def checksheet(self, context, *, user: str = None):
         if not user:
             await context.send('``p?checksheet <user>``')
@@ -49,41 +49,23 @@ class Sheets(commands.Cog):
         embed.add_field(name='RP', value=rp)
         await context.send(embed=embed)
 
-    @commands.command(name='addap', aliases=['ui', 'updateinfo'])
-    async def updateinfo(self, context, *, user: str = None):
+    @commands.command(name='addap', aliases=['ap'])
+    async def addap(self, context, to_add: int, *users):
         member_roles = context.author.roles
         phantom_server = self.client.get_guild(364962599508508672)  # should = phantom guild id
         role_object = phantom_server.get_role(697605737999761408)  # should = veil id
         channel = phantom_server.get_channel(676604257905934399)
-        if role_object not in member_roles:
+        if role_object not in member_roles and context.author.id != 193051160616239104:
             await context.send(f'This command requires the ``VEIL`` role to be used.')
             return
-        if not user:
+        if not users:
             await context.send('``p?addap <user>``')
             return
-        users = user.split()
         users_success = []
         users_fail = []
         embed = Embed(title=f'AP added by {context.author.name}')
-        second = await context.send(f'{context.author.mention} - P(EP), G(amenight), M(P), J(Event), (T)raining')
-
-        def check(m):
-            return m.author.id == context.author.id and m.channel.id == context.channel.id
-        response = await self.client.wait_for('message', check=check, timeout=60)
-        if response.content == 'P' or response.content == 'G':
-            to_add = .5
-        elif response.content == 'M':
-            to_add = 1.5
-        elif response.content == 'J':
-            to_add = 2
-        elif response.content == 'T':
-            to_add = 1
-        else:
-            await second.delete()
-            await context.send('Invalid input. Please retry.')
-            return
         for x in range(0, len(users)):
-            status = update_info(f'{users[x]}', to_add)
+            status = update_info(f'{users[x]}', to_add, True)
             if status:
                 users_success.append(f'{users[x]} ')
             else:
@@ -92,8 +74,33 @@ class Sheets(commands.Cog):
         embed.add_field(name='Success:', value=''.join(users_success))
         if len(users_fail) > 0:
             embed.add_field(name='Failure:', value=''.join(users_fail))
-        await second.delete()
-        await response.delete()
+        await channel.send(embed=embed)
+        await context.message.add_reaction('\U00002705')
+
+    @commands.command(name='addrp', aliases=['rp'])
+    async def addrp(self, context, to_add: int, *users):
+        member_roles = context.author.roles
+        phantom_server = self.client.get_guild(364962599508508672)  # should = phantom guild id
+        role_object = phantom_server.get_role(697605737999761408)  # should = veil id
+        channel = phantom_server.get_channel(676604257905934399)
+        if role_object not in member_roles and context.author.id != 193051160616239104:
+            await context.send(f'This command requires the ``VEIL`` role to be used.')
+            return
+        if not users:
+            await context.send('``p?addrp <user>``')
+            return
+        users_success = []
+        users_fail = []
+        embed = Embed(title=f'RP added by {context.author.name}')
+        for x in range(0, len(users)):
+            status = update_info(f'{users[x]}', to_add, False)
+            if status:
+                users_success.append(f'{users[x]} ')
+            else:
+                users_fail.append(users[x])
+        embed.add_field(name='Success:', value=''.join(users_success))
+        if len(users_fail) > 0:
+            embed.add_field(name='Failure:', value=''.join(users_fail))
         await channel.send(embed=embed)
         await context.message.add_reaction('\U00002705')
 
@@ -112,27 +119,31 @@ def get_info(username):
         return False, None, None
 
 
-def update_info(username, addamt):
+def update_info(username, addamt, is_ap):
     result = sheet.values().get(spreadsheetId=SPREADSHEET_ID, range=RANGE_NAME).execute()
     values = result.get('values', [])
 
     if not values:
-        print('not in values')
         return False
     else:
         x = 6
         for row in values:
             x += 1
             if row[2] == str(username):
-                ap = float(row[3])
-                ap += addamt
                 valueInputOption = 'USER_ENTERED'
-                body = {"values": [[str(ap)]]}
-                response = sheet.values().update(spreadsheetId=SPREADSHEET_ID, range=f'E{x}', body=body,
-                                                 valueInputOption=valueInputOption).execute()
-                print(response)
+                if is_ap:
+                    ap = float(row[3])
+                    ap += addamt
+                    body = {"values": [[str(ap)]]}
+                    sheet.values().update(spreadsheetId=SPREADSHEET_ID, range=f'E{x}', body=body,
+                                          valueInputOption=valueInputOption).execute()
+                else:
+                    rp = int(row[4][0:1])
+                    rp += addamt
+                    body = {"values": [[str(rp) + row[4][1:]]]}
+                    sheet.values().update(spreadsheetId=SPREADSHEET_ID, range=f'F{x}', body=body,
+                                          valueInputOption=valueInputOption).execute()
                 return True
-        print('not found in sheet')
         return False
 
 
