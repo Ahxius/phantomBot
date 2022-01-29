@@ -40,13 +40,15 @@ class Fun(commands.Cog):
         now = datetime.datetime.now()
         next_run = now.replace(hour=0, minute=0, second=0)
         if next_run < now:
-            user_ids = c.execute("SELECT user_id FROM elHuevo").fetchall()
-            for user_id in user_ids:
-                password = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(10))
-                c.execute(f"UPDATE elHuevo SET password = '{password}' WHERE user_id = {user_id[0]}")
-                conn.commit()
-                user = await self.client.fetch_user(user_id[0])
-                await user.send(f"Your El Huevo password has been changed to: ``{password}``")
+            next_run += datetime.timedelta(days=1)
+        await discord.utils.sleep_until(next_run)
+        user_ids = c.execute("SELECT user_id FROM elHuevo").fetchall()
+        for user_id in user_ids:
+            password = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(10))
+            c.execute(f"UPDATE elHuevo SET password = '{password}' WHERE user_id = {user_id[0]}")
+            conn.commit()
+            user = await self.client.fetch_user(user_id[0])
+            await user.send(f"Your El Huevo password has been changed to: ``{password}``")
 
     @daily_task.before_loop
     async def wait_until_midnight(self):
