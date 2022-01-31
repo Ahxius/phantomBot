@@ -16,7 +16,7 @@ c = conn.cursor()
 class Fun(commands.Cog):
     def __init__(self, client):
         self.client = client
-        self.daily_task.start()
+        # self.daily_task.start()
         # self.client.loop.create_task(self.start_nodes())
 
     # async def start_nodes(self):
@@ -26,37 +26,32 @@ class Fun(commands.Cog):
     #                                         port=2333,
     #                                         password='password')
 
-    @commands.Cog.listener()
-    async def on_message(self, message):
-        if message.reference is not None:
-            if message.reference.cached_message.content == "sometimes i dream about cheese":
-                for user_password in c.execute("SELECT password FROM elHuevo").fetchall():
-                    if user_password[0] == message.content:
-                        await message.channel.send('https://tenor.com/view/el-huevo-gif-18925090')
-                        await message.delete()
-
-    @tasks.loop(hours=24)
-    async def daily_task(self):
-        now = datetime.datetime.now()
-        next_run = now.replace(hour=0, minute=0, second=0)
-        if next_run < now:
-            next_run += datetime.timedelta(days=1)
-        await discord.utils.sleep_until(next_run)
-        user_ids = c.execute("SELECT user_id FROM elHuevo").fetchall()
-        for user_id in user_ids:
-            password = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(10))
-            c.execute(f"UPDATE elHuevo SET password = '{password}' WHERE user_id = {user_id[0]}")
-            conn.commit()
-            user = await self.client.fetch_user(user_id[0])
-            await user.send(f"Your El Huevo password has been changed to: ``{password}``")
-
-    @daily_task.before_loop
-    async def wait_until_midnight(self):
-        now = datetime.datetime.now()
-        next_run = now.replace(hour=0, minute=0, second=0)
-        if next_run < now:
-            next_run += datetime.timedelta(days=1)
-        await discord.utils.sleep_until(next_run)
+    # @commands.Cog.listener()
+    # async def on_message(self, message):
+    #     if message.reference is not None:
+    #         if message.reference.cached_message.content == "sometimes i dream about cheese":
+    #             for user_password in c.execute("SELECT password FROM elHuevo").fetchall():
+    #                 if user_password[0] == message.content:
+    #                     await message.channel.send('https://tenor.com/view/el-huevo-gif-18925090')
+    #                     await message.delete()
+    #
+    # @tasks.loop(hours=24)
+    # async def daily_task(self):
+    #     user_ids = c.execute("SELECT user_id FROM elHuevo").fetchall()
+    #     for user_id in user_ids:
+    #         password = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(10))
+    #         c.execute(f"UPDATE elHuevo SET password = '{password}' WHERE user_id = {user_id[0]}")
+    #         conn.commit()
+    #         user = await self.client.fetch_user(user_id[0])
+    #         await user.send(f"Your El Huevo password has been changed to: ``{password}``")
+    #
+    # @daily_task.before_loop
+    # async def wait_until_midnight(self):
+    #     now = datetime.datetime.now()
+    #     next_run = now.replace(hour=0, minute=0, second=0)
+    #     if next_run < now:
+    #         next_run += datetime.timedelta(days=1)
+    #     await discord.utils.sleep_until(next_run)
 
     # @commands.command(name='disconnect', hidden=True)
     # @commands.is_owner()
