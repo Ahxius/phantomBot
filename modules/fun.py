@@ -106,12 +106,13 @@ class Fun(commands.Cog):
         await asyncio.sleep(3)
         await message.edit(embed=boom_embed)
 
-    @commands.command(name='neko', hidden=True)
+    @commands.command(name='workout', hidden=True)
     async def neko(self, context):
         if context.author.id != 449622694682689547 and context.author.id != 609870075037483008:
             await context.send(f"This is lock's private command.")
             return
-        await context.send("hii lock i don't remember the gif that you wanted me to change this to")
+        await context.send("https://media.discordapp.net/attachments/494257951402491938/"
+                           "904802959316094976/1588112612715785145-2.gif")
 
     @commands.command(name='bounce', hidden=True)
     async def bounce(self, context):
