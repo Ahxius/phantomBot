@@ -26,15 +26,15 @@ class Fun(commands.Cog):
     #                                         port=2333,
     #                                         password='password')
 
-    # @commands.Cog.listener()
-    # async def on_message(self, message):
-    #     if message.reference is not None:
-    #         if message.reference.cached_message.content == "sometimes i dream about cheese":
-    #             for user_password in c.execute("SELECT password FROM elHuevo").fetchall():
-    #                 if user_password[0] == message.content:
-    #                     await message.channel.send('https://tenor.com/view/el-huevo-gif-18925090')
-    #                     await message.delete()
-    #
+    @commands.Cog.listener()
+    async def on_message(self, message):
+        if message.reference is not None:
+            if message.reference.cached_message.content == "sometimes i dream about cheese":
+                for user_password in c.execute("SELECT password FROM elHuevo").fetchall():
+                    if user_password[0] == message.content:
+                        await message.channel.send('https://tenor.com/view/el-huevo-gif-18925090')
+                        await message.delete()
+
     # @tasks.loop(hours=24)
     # async def daily_task(self):
     #     user_ids = c.execute("SELECT user_id FROM elHuevo").fetchall()
