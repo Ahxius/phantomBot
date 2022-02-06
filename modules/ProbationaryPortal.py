@@ -126,7 +126,7 @@ class ProbationaryPortal(commands.Cog):
             return
         try:
             response = c.execute(f'SELECT * FROM probieInfo WHERE username = "{username}"').fetchone()
-            seconds = response[2] % (24 * 3600)
+            seconds = response[2]
             hours = seconds // 3600
             seconds %= 3600
             minutes = seconds // 60
@@ -222,7 +222,7 @@ class ProbationaryPortal(commands.Cog):
                         return
                     description = ""
                     for response in responses:
-                        seconds = response[1] % (24 * 3600)
+                        seconds = response[1]
                         hours = seconds // 3600
                         seconds %= 3600
                         minutes = seconds // 60
